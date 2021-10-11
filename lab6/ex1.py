@@ -17,6 +17,7 @@ WHITE = (255, 255, 255)
 SCORE = 0
 rings = 3
 balls = 12
+ring_max_speed = 10
 
 # SHARI
 class Ball:
@@ -68,8 +69,19 @@ class Ring:
         circle(surface, WHITE, (self.x, self.y), self.r1)
 
     def move(self):
-        self.x += self.v_x + randint(-100, 100)/20
-        self.y += self.v_y + randint(-100, 100)/20
+        if (abs(self.v_x) < ring_max_speed):
+            self.v_x += randint(-100, 100) / 50
+        else:
+            self.v_x *= 0.5
+
+        if (abs(self.v_y) < ring_max_speed):
+            self.v_y += randint(-100, 100) / 50
+        else:
+            self.v_y *= 0.5
+
+        self.x += self.v_x
+        self.y += self.v_y
+        
 
     def collision(self, borders):
         if not (self.x > self.r2 and self.x < borders[0]):
