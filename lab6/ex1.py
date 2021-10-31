@@ -19,8 +19,14 @@ rings = 3
 balls = 12
 ring_max_speed = 10
 
+# record table
+Leaderboard = 'lead.txt'
+
 # SHARI
 class Ball:
+    '''
+    Class of the ball object
+    '''
 
     def __init__(self):
 
@@ -32,13 +38,27 @@ class Ball:
         self.color = choice(COLORS)
 
     def draw(self, surface):
+        '''
+        Function for drawing object
+        :param surface: surface which is drawed on
+        :return: VoId
+        '''
         circle(surface, self.color, (self.x, self.y), self.r)
 
     def move(self):
+        '''
+        Function for moving
+        :return:vOiD
+        '''
         self.x += self.v_x
         self.y += self.v_y
 
     def collision(self, borders):
+        '''
+        Function for registering collisions
+        :param borders: array with coordinates of borders
+        :return: void
+        '''
         if not (self.x > self.r and self.x < borders[0]):
             self.v_x = - self.v_x
 
@@ -46,16 +66,25 @@ class Ball:
             self.v_y = - self.v_y
 
     def shot(self, x, y):
+        '''
+        Function for scoring shots
+        :param x: mouse x coordinate
+        :param y: mouse y coordinate
+        :return: score for the shot
+        '''
         if (x - self.x) ** 2 + (y - self.y) ** 2 <= self.r ** 2:
             return 100
         else:
             return 0
 
+
 # KOLCA
 class Ring:
+    '''
+    Class of the ring object
+    '''
 
     def __init__(self):
-
         self.v_x = randint(-100, 100)/10
         self.v_y = randint(-100, 100)/10
         self.r2 = randint(30, 40)
@@ -65,10 +94,19 @@ class Ring:
         self.color = (255, 0, 0)
 
     def draw(self, surface):
+        '''
+        Function for drawing object
+        :param surface: surface which is drawed on
+        :return: VoId
+        '''
         circle(surface, self.color, (self.x, self.y), self.r2)
         circle(surface, WHITE, (self.x, self.y), self.r1)
 
     def move(self):
+        '''
+        Function for moving
+        :return:vOiD
+        '''
         if (abs(self.v_x) < ring_max_speed):
             self.v_x += randint(-100, 100) / 50
         else:
@@ -81,9 +119,14 @@ class Ring:
 
         self.x += self.v_x
         self.y += self.v_y
-        
+
 
     def collision(self, borders):
+        '''
+        Function for registering collisions
+        :param borders: array with coordinates of borders
+        :return: void
+        '''
         if not (self.x > self.r2 and self.x < borders[0]):
             self.v_x = - self.v_x
 
@@ -91,6 +134,12 @@ class Ring:
             self.v_y = - self.v_y
 
     def shot(self, x, y):
+        '''
+        Function for scoring shots
+        :param x: mouse x coordinate
+        :param y: mouse y coordinate
+        :return: score for the shot
+        '''
         if (x - self.x) ** 2 + (y - self.y) ** 2 <= self.r2 ** 2 and (x - self.x) ** 2 + \
                 (y - self.y) ** 2 >= self.r1 ** 2:
             return 100
